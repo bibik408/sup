@@ -1,0 +1,136 @@
+/* sup operator panel — dark, terminal-ish */
+:root {
+  --bg: #0c0f12;
+  --panel: #14181d;
+  --panel-2: #1a1f25;
+  --border: #232a32;
+  --text: #d8e0e8;
+  --muted: #7a8693;
+  --accent: #21d07a;
+  --accent-dim: #197a4a;
+  --warn: #ffb454;
+  --danger: #ff6b6b;
+  --mono: ui-monospace, "JetBrains Mono", "Cascadia Code", "Fira Code", Menlo, Consolas, monospace;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; background: var(--bg); color: var(--text); font-family: var(--mono); font-size: 13.5px; }
+a { color: var(--accent); }
+
+.bar {
+  position: sticky; top: 0; z-index: 5;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 12px 18px;
+  background: var(--panel);
+  border-bottom: 1px solid var(--border);
+}
+.brand { display: flex; align-items: center; gap: 10px; }
+.brand__name { font-weight: 700; letter-spacing: 1px; }
+.dot {
+  width: 10px; height: 10px; border-radius: 50%;
+  background: var(--danger);
+  box-shadow: 0 0 0 0 rgba(255,107,107,.6);
+  transition: background-color .2s;
+}
+.dot.ok { background: var(--accent); box-shadow: 0 0 8px rgba(33,208,122,.5); }
+.bar__stats { display: flex; align-items: center; gap: 10px; color: var(--muted); }
+.bar__stats b { color: var(--text); }
+.sep { color: var(--border); }
+.mute { display: inline-flex; align-items: center; gap: 6px; cursor: pointer; }
+
+.grid {
+  padding: 18px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 14px;
+  align-content: start;
+  min-height: calc(100vh - 52px);
+}
+.empty {
+  grid-column: 1 / -1;
+  text-align: center;
+  color: var(--muted);
+  padding: 80px 20px;
+  border: 1px dashed var(--border);
+  border-radius: 10px;
+  background: var(--panel);
+}
+.empty__title { font-size: 18px; color: var(--text); margin-bottom: 6px; }
+
+.card {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  animation: fadein .2s ease-out;
+}
+@keyframes fadein { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+
+.card.is-stale { opacity: .55; }
+.card.is-flash { box-shadow: 0 0 0 1px var(--accent), 0 0 12px rgba(33,208,122,.25); transition: box-shadow .8s; }
+
+.card__head { display: flex; align-items: center; gap: 8px; }
+.card__sid { color: var(--muted); flex: 0 0 auto; }
+.card__time { margin-left: auto; color: var(--muted); font-size: 12px; }
+
+.badge {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: var(--panel-2);
+  color: var(--muted);
+  font-size: 12px;
+  text-transform: lowercase;
+}
+.badge.is-qr    { color: var(--muted); }
+.badge.is-phone { color: var(--warn);   border-color: rgba(255,180,84,.4); }
+.badge.is-code  { color: var(--accent); border-color: var(--accent-dim); }
+
+.card__row { display: grid; grid-template-columns: 70px 1fr; gap: 10px; align-items: baseline; }
+.card__row .k { color: var(--muted); }
+.card__row .v { word-break: break-all; }
+.card__row .ua { color: var(--muted); font-size: 12px; }
+.card__row .live { color: var(--accent); }
+
+.code-row .v.code {
+  font-size: 18px;
+  letter-spacing: 4px;
+  color: var(--accent);
+  font-weight: 700;
+}
+
+.card__log {
+  margin-top: 4px;
+  padding-top: 8px;
+  border-top: 1px dashed var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  max-height: 120px;
+  overflow-y: auto;
+  font-size: 12px;
+  color: var(--muted);
+}
+.card__log .line .t { color: var(--accent); margin-right: 6px; }
+.card__log .line .ts { color: var(--border); margin-right: 6px; }
+
+/* toasts */
+.toast-wrap {
+  position: fixed; bottom: 18px; right: 18px; z-index: 10;
+  display: flex; flex-direction: column; gap: 8px;
+}
+.toast {
+  background: var(--panel-2);
+  color: var(--text);
+  border: 1px solid var(--accent-dim);
+  border-radius: 8px;
+  padding: 10px 14px;
+  box-shadow: 0 10px 30px rgba(0,0,0,.4);
+  animation: slidein .25s ease-out;
+  font-size: 13px;
+}
+.toast b { color: var(--accent); }
+@keyframes slidein { from { opacity: 0; transform: translateX(20px); } to { opacity: 1; transform: none; } }
