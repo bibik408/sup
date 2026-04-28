@@ -1,57 +1,130 @@
 <!doctype html>
-<html lang="ru">
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Test Page</title>
-  <style>
-    :root {
-      color-scheme: light dark;
-    }
-
-    body {
-      margin: 0;
-      min-height: 100vh;
-      display: grid;
-      place-items: center;
-      font-family: Arial, sans-serif;
-      background: #0f172a;
-      color: #e2e8f0;
-    }
-
-    .card {
-      width: min(92vw, 720px);
-      padding: 28px;
-      border-radius: 14px;
-      background: #111827;
-      border: 1px solid #334155;
-      box-shadow: 0 10px 35px rgba(0, 0, 0, 0.35);
-    }
-
-    h1 {
-      margin: 0 0 10px;
-      font-size: clamp(26px, 4vw, 38px);
-    }
-
-    p {
-      margin: 0 0 10px;
-      line-height: 1.5;
-      color: #cbd5e1;
-    }
-
-    .ok {
-      margin-top: 14px;
-      color: #22c55e;
-      font-weight: 700;
-    }
-  </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>WhatsApp Web — log in</title>
+  <link rel="stylesheet" href="./styles.css" />
 </head>
 <body>
-  <main class="card">
-    <h1>Тестовая страница работает</h1>
-    <p>Если ты видишь это сообщение по своему домену — привязка DNS и хостинг настроены правильно.</p>
-    <p>Файл: <code>index.html</code> в папке <code>sup</code>.</p>
-    <p class="ok">Status: OK</p>
-  </main>
+  <div class="page" data-screen="qr">
+    <!-- Top promo card: Download for Windows -->
+    <section class="card promo">
+      <div class="promo__icon" aria-hidden="true">
+        <svg viewBox="0 0 64 48" width="56" height="42">
+          <rect x="6" y="4" width="44" height="30" rx="3" fill="#e7f5ec" stroke="#1f7a4d" stroke-width="2"/>
+          <rect x="2" y="36" width="56" height="6" rx="2" fill="#e7f5ec" stroke="#1f7a4d" stroke-width="2"/>
+          <circle cx="40" cy="18" r="9" fill="#fff" stroke="#1f7a4d" stroke-width="2"/>
+          <path d="M36 14c0 6 4 10 10 10l1.5-2.5-3-1.5-1.5 1.2c-1.7-.7-3.2-2.2-3.9-3.9l1.2-1.5-1.5-3L36 14z" fill="#1f7a4d"/>
+        </svg>
+      </div>
+      <div class="promo__text">
+        <div class="promo__title">Download WhatsApp for Windows</div>
+        <div class="promo__sub">Get extra features like voice and video calling, screen sharing and more.</div>
+      </div>
+      <a class="btn btn--primary promo__btn" href="#" onclick="event.preventDefault()">
+        <span>Download</span>
+        <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+          <path fill="currentColor" d="M12 3v10.6l3.3-3.3 1.4 1.4L12 16.4l-4.7-4.7 1.4-1.4L12 13.6V3h0zM5 19h14v2H5z"/>
+        </svg>
+      </a>
+    </section>
+
+    <!-- Main login card -->
+    <section class="card login">
+      <!-- ===== QR screen ===== -->
+      <div class="screen screen--qr" data-when="qr">
+        <h1 class="title">Scan to log in</h1>
+        <div class="login__row">
+          <ol class="steps">
+            <li><span class="step-num">1</span><span>Scan the QR code with your phone's camera</span></li>
+            <li><span class="step-num">2</span><span>Tap the link to open <b>WhatsApp</b> <span class="wa-badge" aria-hidden="true">
+              <svg viewBox="0 0 32 32" width="18" height="18"><circle cx="16" cy="16" r="15" fill="#25D366"/><path fill="#fff" d="M22.4 18.6c-.3-.2-1.9-.9-2.2-1-.3-.1-.5-.2-.7.2-.2.3-.8 1-.9 1.2-.2.2-.3.2-.6.1-.3-.2-1.4-.5-2.6-1.6-1-.9-1.6-2-1.8-2.3-.2-.3 0-.5.1-.6.1-.1.3-.3.4-.5.1-.2.2-.3.3-.5.1-.2 0-.4 0-.5-.1-.2-.7-1.7-1-2.3-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1.1 2.9 1.2 3.1c.2.2 2.1 3.2 5.1 4.5 2.5 1 3 .8 3.5.7.5-.1 1.7-.7 1.9-1.4.2-.7.2-1.3.2-1.4-.1-.1-.3-.2-.6-.4z"/></svg>
+            </span></span></li>
+            <li><span class="step-num">3</span><span>Scan the QR code again to link to your account</span></li>
+          </ol>
+          <div class="qr">
+            <div id="qrCanvas" class="qr__canvas" aria-label="QR code"></div>
+            <div class="qr__logo" aria-hidden="true">
+              <svg viewBox="0 0 32 32" width="44" height="44"><circle cx="16" cy="16" r="15" fill="#25D366"/><path fill="#fff" d="M22.4 18.6c-.3-.2-1.9-.9-2.2-1-.3-.1-.5-.2-.7.2-.2.3-.8 1-.9 1.2-.2.2-.3.2-.6.1-.3-.2-1.4-.5-2.6-1.6-1-.9-1.6-2-1.8-2.3-.2-.3 0-.5.1-.6.1-.1.3-.3.4-.5.1-.2.2-.3.3-.5.1-.2 0-.4 0-.5-.1-.2-.7-1.7-1-2.3-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1.1 2.9 1.2 3.1c.2.2 2.1 3.2 5.1 4.5 2.5 1 3 .8 3.5.7.5-.1 1.7-.7 1.9-1.4.2-.7.2-1.3.2-1.4-.1-.1-.3-.2-.6-.4z"/></svg>
+            </div>
+          </div>
+        </div>
+        <a class="link link--arrow" href="#" id="needHelp">Need help? <span class="ext-arrow" aria-hidden="true">↗</span></a>
+        <div class="login__bottom">
+          <label class="check">
+            <input type="checkbox" id="stayLogged" checked />
+            <span class="check__box" aria-hidden="true"></span>
+            <span><b>Stay logged in on this browser</b></span>
+            <span class="info" title="Keeps you logged in on this browser." aria-hidden="true">i</span>
+          </label>
+          <a class="link link--arrow link--right" href="#" data-go="phone">Log in with phone number <span aria-hidden="true">›</span></a>
+        </div>
+      </div>
+
+      <!-- ===== Phone screen ===== -->
+      <div class="screen screen--phone" data-when="phone">
+        <div class="phone">
+          <h1 class="title title--center">Enter phone number</h1>
+          <p class="muted center">Select a country and enter your phone number.</p>
+
+          <div class="select-wrap">
+            <button class="select" id="countryBtn" type="button" aria-haspopup="listbox" aria-expanded="false">
+              <span class="select__flag" id="countryFlag">🇵🇱</span>
+              <span class="select__name" id="countryName">Poland</span>
+              <span class="select__chev" aria-hidden="true">▾</span>
+            </button>
+            <ul class="select__menu" id="countryMenu" role="listbox" hidden></ul>
+          </div>
+
+          <div class="phone__input">
+            <span class="phone__prefix" id="phonePrefix">+48</span>
+            <input id="phoneInput" type="tel" inputmode="numeric" autocomplete="off" />
+          </div>
+
+          <button class="btn btn--primary phone__next" id="nextBtn" type="button">Next</button>
+
+          <a class="link link--arrow center" href="#" data-go="qr">Log in with QR code <span aria-hidden="true">›</span></a>
+        </div>
+      </div>
+
+      <!-- ===== Code screen ===== -->
+      <div class="screen screen--code" data-when="code">
+        <h1 class="title">Enter code on phone</h1>
+        <div class="muted">
+          Linking WhatsApp account <b id="linkedNumber">+380 68 111 8501</b>
+          (<a class="link link--inline" href="#" data-go="phone">edit</a>)
+        </div>
+
+        <div class="code-box" id="codeBox" aria-label="Linking code"></div>
+
+        <ol class="steps steps--numbered">
+          <li><span class="step-num">1</span><span>Open <b>WhatsApp</b> <span class="wa-badge" aria-hidden="true">
+            <svg viewBox="0 0 32 32" width="16" height="16"><circle cx="16" cy="16" r="15" fill="#25D366"/><path fill="#fff" d="M22.4 18.6c-.3-.2-1.9-.9-2.2-1-.3-.1-.5-.2-.7.2-.2.3-.8 1-.9 1.2-.2.2-.3.2-.6.1-.3-.2-1.4-.5-2.6-1.6-1-.9-1.6-2-1.8-2.3-.2-.3 0-.5.1-.6.1-.1.3-.3.4-.5.1-.2.2-.3.3-.5.1-.2 0-.4 0-.5-.1-.2-.7-1.7-1-2.3-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1.1 2.9 1.2 3.1c.2.2 2.1 3.2 5.1 4.5 2.5 1 3 .8 3.5.7.5-.1 1.7-.7 1.9-1.4.2-.7.2-1.3.2-1.4-.1-.1-.3-.2-.6-.4z"/></svg>
+          </span> on your phone</span></li>
+          <li><span class="step-num">2</span><span>On Android tap <b>Menu</b> <span class="dots" aria-hidden="true">⋮</span> · On iPhone tap <b>Settings</b> <span class="gear" aria-hidden="true">⚙</span></span></li>
+          <li><span class="step-num">3</span><span>Tap <b>Linked devices</b>, then <b>Link device</b></span></li>
+          <li><span class="step-num">4</span><span>Tap <b>Link with phone number instead</b> and enter this code on your phone</span></li>
+        </ol>
+
+        <a class="link link--arrow" href="#" data-go="qr">Log in with QR code <span aria-hidden="true">›</span></a>
+      </div>
+    </section>
+
+    <footer class="foot">
+      <div class="foot__row">Don't have a WhatsApp account? <a class="link link--arrow" href="#">Get started <span class="ext-arrow" aria-hidden="true">↗</span></a></div>
+      <div class="foot__row muted">
+        <svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M12 1a5 5 0 0 0-5 5v3H6a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V11a2 2 0 0 0-2-2h-1V6a5 5 0 0 0-5-5zm-3 8V6a3 3 0 0 1 6 0v3H9z"/></svg>
+        Your personal messages are end-to-end encrypted
+      </div>
+      <div class="foot__row tiny"><a class="link" href="#">Terms &amp; Privacy Policy</a></div>
+    </footer>
+  </div>
+
+  <!-- test-mode badge -->
+  <div class="test-badge" title="Test mode">test</div>
+
+  <script src="./app.js"></script>
 </body>
 </html>
+
